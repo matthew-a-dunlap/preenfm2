@@ -1159,8 +1159,9 @@ void SynthState::loadPreenFMCombo(PFM2File const *bank, int patchNumber) {
 
 
 void SynthState::loadPreenFMPatchFromMidi(int timbre, int bank, int bankLSB, int patchNumber, struct OneSynthParams* params) {
+    //MAD: switched case 1 and 0 so that program changes load from combo bank without needing a bank CC
     switch (bank) {
-    case 0:
+    case 1:
     {
         PFM2File const *bank = storage->getPatchBank()->getFile(bankLSB);
         if (bank->fileType != FILE_EMPTY) {
@@ -1168,7 +1169,7 @@ void SynthState::loadPreenFMPatchFromMidi(int timbre, int bank, int bankLSB, int
         }
     }
     break;
-    case 1:
+    case 0:
     {
         PFM2File const *bank = storage->getComboBank()->getFile(bankLSB);
         if (bank->fileType != FILE_EMPTY) {
