@@ -20,6 +20,7 @@
 #include "MidiDecoder.h"
 #include "usbKey_usr.h"
 #include "usb_dcd.h"
+#include "madglobal.h"
 
 
 extern USB_OTG_CORE_HANDLE          usbOTGDevice;
@@ -322,6 +323,8 @@ void MidiDecoder::midiEventReceived(MidiEvent midiEvent) {
     case MIDI_PROGRAM_CHANGE:
         if (this->synthState->fullState.midiConfigValue[MIDICONFIG_PROGRAM_CHANGE]) {
             for (int tk = 0; tk< timbreIndex; tk++ ) {
+//MAD: In here can I save a global variable
+                lastProgramChange = midiEvent.value[0];
                 this->synth->loadPreenFMPatchFromMidi(timbres[tk], bankNumber[timbres[tk]], bankNumberLSB[timbres[tk]], midiEvent.value[0]);
             }
         }
